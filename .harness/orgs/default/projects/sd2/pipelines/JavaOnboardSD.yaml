@@ -62,7 +62,7 @@ pipeline:
                   name: CreateCatalog
                   identifier: CreateCatalog
                   spec:
-                    fileName: gen-code
+                    fileName: gen-code.yaml
                     filePath: <+pipeline.variables.service_name>
                     fileContent: |-
                       apiVersion: backstage.io/v1alpha1
@@ -97,7 +97,7 @@ pipeline:
                     connectorRef: account.ShibamDhar
                     organization: <+pipeline.variables.organization>
                     repository: <+pipeline.variables.repo_name>
-                    filePath: <+pipeline.variables.service_name>
+                    filePath: gen-code.yaml
                     branch: main
         tags: {}
   variables:
