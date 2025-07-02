@@ -82,6 +82,7 @@ pipeline:
                   identifier: DirectPushToGit
                   spec:
                     connectorType: Github
+                    forcePush: true
                     connectorRef: account.ShibamDhar
                     organization: <+pipeline.variables.organization>
                     repository: <+pipeline.variables.repo_name>
