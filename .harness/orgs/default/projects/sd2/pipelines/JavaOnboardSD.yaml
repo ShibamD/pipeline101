@@ -69,12 +69,12 @@ pipeline:
                       kind: Component
                       metadata:
                         name: <+pipeline.variables.service_name>
-                        description: <+pipeline.variables.service_name>
+                        description: <+pipeline.variables.description>
                         annotations:
                           backstage.io/techdocs-ref: dir:.
                       spec:
                         type: service
-                        owner:abc
+                        owner: abc
                         lifecycle: experimental
               - step:
                   type: DirectPush
