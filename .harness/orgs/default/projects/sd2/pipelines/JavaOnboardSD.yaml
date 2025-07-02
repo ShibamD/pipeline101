@@ -56,7 +56,7 @@ pipeline:
                     repository: <+pipeline.variables.repo_name>
                     repoType: public
                     defaultBranch: main
-                    personalAccount: true
+                    personalAccount: false
               - step:
                   type: CreateCatalog
                   name: CreateCatalog
