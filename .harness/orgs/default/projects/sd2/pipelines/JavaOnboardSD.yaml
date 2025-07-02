@@ -68,13 +68,13 @@ pipeline:
                       apiVersion: backstage.io/v1alpha1
                       kind: Component
                       metadata:
-                        name: <+pipeline.vars.project_name>
-                        description: <+pipeline.vars.description>
+                        name:<+pipeline.variables.service_name>
+                        description: <+pipeline.variables.service_name>
                         annotations:
                           backstage.io/techdocs-ref: dir:.
                       spec:
                         type: service
-                        owner: <+pipeline.vars.owners>
+                        owner:abc
                         lifecycle: experimental
               - step:
                   type: DirectPush
