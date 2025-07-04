@@ -68,7 +68,7 @@ pipeline:
                       apiVersion: backstage.io/v1alpha1
                       kind: Component
                       metadata:
-                        name: <+pipeline.variables.service_name>
+                        name: javaSD
                         description: <+pipeline.variables.description>
                         annotations:
                           backstage.io/techdocs-ref: dir:.
