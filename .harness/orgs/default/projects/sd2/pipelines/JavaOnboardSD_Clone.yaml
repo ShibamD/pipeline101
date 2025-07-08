@@ -1,0 +1,138 @@
+pipeline:
+  tags: {}
+  projectIdentifier: sd2
+  orgIdentifier: default
+  stages:
+    - stage:
+        name: java-onb-dev
+        identifier: javaonbdev
+        description: ""
+        type: IDP
+        spec:
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: GitClone
+                  name: CloneCookieTemp
+                  identifier: CloneCookieTemp
+                  spec:
+                    connectorRef: account.ShibamDhar
+                    repoName: <+pipeline.variables.cookie_repo>
+                    build:
+                      type: branch
+                      spec:
+                        branch: main
+                  description: Clone the Java cookiecutter template
+              - step:
+                  type: CookieCutter
+                  name: CookieCuttercodeStart
+                  identifier: CookieCuttercodeStart
+                  spec:
+                    templateType: private
+                    pathForTemplate: <+pipeline.variables.cookie_repo>
+                    cookieCutterVariables:
+                      service_name: <+pipeline.variables.service_name>
+                      java_package_name: <+pipeline.variables.java_package_name>
+                      description: <+pipeline.variables.description>
+                      owner: <+pipeline.variables.owner>
+                    verbose: false
+                    overwriteIfExists: false
+              - step:
+                  type: CreateRepo
+                  name: CreateREPO
+                  identifier: CreateREPO
+                  spec:
+                    connectorType: Github
+                    connectorRef: account.ShibamDhar
+                    organization: <+pipeline.variables.organization>
+                    repository: <+pipeline.variables.repo_name>
+                    repoType: public
+                    defaultBranch: main
+                    personalAccount: false
+              - step:
+                  type: CreateCatalog
+                  name: CreateCatalog
+                  identifier: CreateCatalog
+                  spec:
+                    fileName: gen-code.yaml
+                    filePath: <+pipeline.variables.service_name>
+                    fileContent: |-
+                      apiVersion: backstage.io/v1alpha1
+                      kind: Component
+                      metadata:
+                        name: javaSD
+                        description: <+pipeline.variables.description>
+                        annotations:
+                          backstage.io/techdocs-ref: dir:.
+                      spec:
+                        type: service
+                        owner: abc
+                        lifecycle: experimental
+              - step:
+                  type: DirectPush
+                  name: DirectPushToGit
+                  identifier: DirectPushToGit
+                  spec:
+                    connectorType: Github
+                    forcePush: true
+                    connectorRef: account.ShibamDhar
+                    organization: <+pipeline.variables.organization>
+                    repository: <+pipeline.variables.repo_name>
+                    codeDirectory: <+pipeline.variables.service_name>
+                    branch: main
+              - step:
+                  type: RegisterCatalog
+                  name: RegisterCatalogEntity
+                  identifier: RegisterCatalogEntity
+                  spec:
+                    connectorType: Github
+                    connectorRef: account.ShibamDhar
+                    organization: <+pipeline.variables.organization>
+                    repository: <+pipeline.variables.repo_name>
+                    filePath: gen-code.yaml
+                    branch: main
+        tags: {}
+  variables:
+    - name: service_name
+      type: String
+      description: ""
+      required: true
+      value: <+input>
+    - name: java_package_name
+      type: String
+      description: ""
+      required: true
+      value: <+input>
+    - name: description
+      type: String
+      description: ""
+      required: true
+      value: <+input>
+    - name: owner
+      type: String
+      description: ""
+      required: true
+      value: <+input>
+    - name: cookie_repo
+      type: String
+      description: ""
+      required: false
+      value: java-cookiecutter-template
+    - name: organization
+      type: String
+      description: ""
+      required: true
+      value: <+input>
+    - name: repo_name
+      type: String
+      description: ""
+      required: true
+      value: <+input>
+  identifier: JavaOnboardSD_Clone
+  name: Java-Onboard-SD - Clone
