@@ -83,7 +83,7 @@ pipeline:
                         "yaml": "apiVersion: harness.io/v1\nkind: component\ntype: Service\nidentifier: sdtest_defaults\nname: <+pipeline.variables.service_name>\nowner: <+pipeline.variables.owner>\nspec:\n  lifecycle: experimental\n  ownedBy:\n    - group/sample-group\nmetadata:\n  description: My Sample service.\n  annotations:\n    backstage.io/source-location: url:https://github.com/<+pipeline.variables.organization>/<+pipeline.variables.repo_name>/blob/main/<+pipeline.variables.service_name>.yaml\n    backstage.io/techdocs-ref: dir:.\n  links:\n    - title: Website\n      url: http://my-sample-website.com\n  tags:\n    - my-sample\n",
                         "git_details": {
                           "branch_name": "main",
-                          "file_path": "harness_entity/<+pipeline.variables.service_name>.yaml",
+                          "file_path": "<+pipeline.variables.service_name>.yaml",
                           "commit_message": "Added Harness Git Experience",
                           "connector_ref": "account.ShibamDhar",
                           "store_type": "REMOTE",
