@@ -138,4 +138,4 @@ pipeline:
       required: true
       value: <+input>
   identifier: JavaOnboardSD_Clone
-  name: Java-Onboard-SD - Clone
+  name: Java-Onboard-createEntity
