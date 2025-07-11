@@ -29,6 +29,9 @@ pipeline:
                       spec:
                         branch: main
                   description: Clone the Java cookiecutter template
+                  when:
+                    stageStatus: Success
+                    condition: "false"
               - step:
                   type: CookieCutter
                   name: CookieCuttercodeStart
@@ -43,6 +46,9 @@ pipeline:
                       owner: <+pipeline.variables.owner>
                     verbose: false
                     overwriteIfExists: false
+                  when:
+                    stageStatus: Success
+                    condition: "false"
               - step:
                   type: CreateRepo
                   name: CreateREPO
@@ -55,6 +61,9 @@ pipeline:
                     repoType: public
                     defaultBranch: main
                     personalAccount: false
+                  when:
+                    stageStatus: Success
+                    condition: "false"
               - step:
                   type: DirectPush
                   name: DirectPushToGit
@@ -67,6 +76,9 @@ pipeline:
                     repository: <+pipeline.variables.repo_name>
                     codeDirectory: <+pipeline.variables.service_name>
                     branch: main
+                  when:
+                    stageStatus: Success
+                    condition: "false"
               - step:
                   type: Run
                   name: create and register entity
